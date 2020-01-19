@@ -1,13 +1,24 @@
 import React from 'react';
 import logo from './logo.svg';
-// import './App.css';
+
+// import static files
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import { HeaderComponent } from './components/header/header';
 import './public/css/style.css';
 
-function App() {
-    return ( < HeaderComponent / > );
-}
+// import components
+import { HeaderComponent } from './components/header/header';
+import { LoginComponent } from './components/login/login';
+import { FilterComponents } from './components/staff/filter';
 
-export default App;
+function App() {
+    return ( <
+        div >
+        <
+        HeaderComponent / > { /* <LoginComponent /> */ } <
+        FilterComponents / >
+        <
+        /div>);
+    }
+
+    export default App;
