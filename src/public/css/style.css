@@ -3,7 +3,7 @@ body {
 }
 
 .content {
-    margin: 10% 0;
+    margin: 5% 0;
 }
 
 .container {
@@ -189,7 +189,7 @@ body {
 /* table result */
 
 .table-result {
-    margin: 5% auto;
+    margin: auto;
 }
 
 .table-result>thead>tr>th {

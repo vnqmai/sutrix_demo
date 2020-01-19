@@ -10,15 +10,16 @@ import './public/css/style.css';
 import { HeaderComponent } from './components/header/header';
 import { LoginComponent } from './components/login/login';
 import { FilterComponents } from './components/staff/filter';
+import { FilterResultComponent } from './components/staff/filterResult';
 
 function App() {
-    return ( <
-        div >
-        <
-        HeaderComponent / > { /* <LoginComponent /> */ } <
-        FilterComponents / >
-        <
-        /div>);
+    return (
+        <div> 
+            < HeaderComponent / >  
+            {/* <LoginComponent /> */}
+            {/* <FilterComponents/> */}
+            <FilterResultComponent/>
+        </div>);
     }
 
     export default App;
