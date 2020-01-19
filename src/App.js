@@ -3,11 +3,11 @@ import logo from './logo.svg';
 // import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import { NavbarComponent } from './components/header/navbar';
+import { HeaderComponent } from './components/header/header';
 import './public/css/style.css';
 
 function App() {
-    return ( < NavbarComponent / > );
+    return ( < HeaderComponent / > );
 }
 
 export default App;
