@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class FilterComponents extends React.Component{
+export class FilterComponent extends React.Component{
     render(){
         return(
             <div className="container content">

@@ -6,7 +6,7 @@ export class NavbarComponent extends React.Component{
             <nav className="navbar navbar-default" role="navigation">            
                 <div className="navbar-header">
                     <button type="button" className="navbar-toggle show" id="back">
-                        <img src="images/back.png" alt="<" id="back"/>
+                        <img src="/images/back.png" alt="<" id="back"/>
                     </button>
 
                     <div className="dropdown">
