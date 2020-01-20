@@ -1,11 +1,18 @@
 import React from 'react';
 
 export class NavbarComponent extends React.Component{
+    constructor(){
+        super();
+    }
+
+    componentDidMount(){
+        console.log('path: ',this.props.path);
+    }
     render(){
         return(                        
             <nav className="navbar navbar-default" role="navigation">            
                 <div className="navbar-header">
-                    <button type="button" className="navbar-toggle show" id="back">
+                    <button type="button" className="navbar-toggle" id="back">
                         <img src="/images/back.png" alt="<" id="back"/>
                     </button>
 

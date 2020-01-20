@@ -1,10 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export class FilterResultComponent extends React.Component{
+class FilterResultComponent extends React.Component{
     render(){
-        return(
-            <div className="container content">
-
+        console.log("data",this.props.staff);
+        return(            
                 <table className="table table-hover table-result">
                     <thead>
                         <tr>
@@ -16,24 +16,28 @@ export class FilterResultComponent extends React.Component{
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Nguyen Thi Huyen Tran</td>
-                            <td>20/10/2010</td>
-                            <td>sutrix.tran.nguyen</td>
-                            <td>tran.nguyen@sutrixmedia.com</td>
-                            <td>Frontend</td>
-                        </tr>
-                        <tr>
-                            <td>Pham Thi Huyen Tran</td>
-                            <td>31/12/1013</td>
-                            <td>sutrix.tran.pham</td>
-                            <td>tran.pham@sutrixmedia.com</td>
-                            <td>Frontend</td>
-                        </tr>
+                        {this.props.staff.map((st, index)=>{
+                            return(
+                                <tr key={index}>
+                                    <td>{st.lastName + ' ' + st.firstName}</td>
+                                    <td>{st.birthday}</td>
+                                    <td>{st.skype}</td>
+                                    <td>{st.email}</td>
+                                    <td>{st.department}</td>
+                                </tr>
+                            );                            
+                        })}                                                
                     </tbody>
                 </table>
 
-            </div>
         );
+    }    
+}
+
+const mapStateToProps = state => {
+    return{
+        staff: state.filter.staff
     }
 }
+
+export default connect(mapStateToProps)(FilterResultComponent);
