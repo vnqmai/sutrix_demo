@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { getStaffInfo } from '../../actions/staff';
+import { FilterResultDetails } from './filterResultDetails';
 
 class FilterResultComponent extends React.Component{
     render(){
@@ -17,14 +19,8 @@ class FilterResultComponent extends React.Component{
                     </thead>
                     <tbody>
                         {this.props.staff.map((st, index)=>{
-                            return(
-                                <tr key={index}>
-                                    <td>{st.lastName + ' ' + st.firstName}</td>
-                                    <td>{st.birthday}</td>
-                                    <td>{st.skype}</td>
-                                    <td>{st.email}</td>
-                                    <td>{st.department}</td>
-                                </tr>
+                            return(                                                                                                                         
+                                <FilterResultDetails key={index} staff={st}></FilterResultDetails>
                             );                            
                         })}                                                
                     </tbody>
@@ -40,4 +36,12 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(FilterResultComponent);
+const mapDispatchToProps = dispatch => {
+    return{
+        getStaffInfo: (data) => {
+            dispatch(getStaffInfo(data));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterResultComponent);

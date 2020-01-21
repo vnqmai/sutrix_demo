@@ -16,6 +16,7 @@ import { BreadcrumbsComponent } from './components/header/breadcrums';
 import { LoginComponent } from './components/login/login';
 import FilterFormComponent from './components/staff/filterForm';
 import FilterResultComponent from './components/staff/filterResult';
+import StaffInfoComponent from './components/staff/staffInfo';
 
 
 
@@ -35,6 +36,7 @@ class App extends React.Component {
                         <Route exact path='/' component={LoginComponent}/>
                         <Route path='/staff/filter' component={FilterFormComponent}/>
                         <Route path='/staff/result' component={FilterResultComponent}/>
+                        <Route path='/staff/info' component={StaffInfoComponent}/>
                     </Switch>           
                 </Router>
             </Provider>
