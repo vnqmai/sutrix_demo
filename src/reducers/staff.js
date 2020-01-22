@@ -1,5 +1,6 @@
 const initState = {
-    staffInfo: {}
+    staffInfo: {},
+    addSuccess: false
 };
 
 export const staffReducer = (state = initState, action) => {
@@ -9,6 +10,14 @@ export const staffReducer = (state = initState, action) => {
                 return {
                     ...state,
                     staffInfo: action.staffInfo
+                }
+            }
+
+        case 'ADD_NEW_STAFF':
+            {
+                return {
+                    ...state,
+                    addSuccess: true
                 }
             }
 

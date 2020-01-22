@@ -5,3 +5,10 @@ export const getStaffInfo = (staffInfo, staffHistories) => {
         staffHistories
     }
 }
+
+export const addNewStaff = (addSuccess) => {
+    return {
+        type: 'ADD_NEW_STAFF',
+        addSuccess
+    }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import { rootReducer } from './reducers';
@@ -17,6 +17,7 @@ import { LoginComponent } from './components/login/login';
 import FilterFormComponent from './components/staff/filterForm';
 import FilterResultComponent from './components/staff/filterResult';
 import StaffInfoComponent from './components/staff/staffInfo';
+import Staff from './components/staff/staff';
 
 
 
@@ -30,14 +31,16 @@ class App extends React.Component {
         return (
             <Provider store={myStore}>
                 <Router>
-                    <NavbarComponent/>
+                    <NavbarComponent/>                                                 
                     <BreadcrumbsComponent/>
-                    <Switch>                    
+                    <Switch>                                          
                         <Route exact path='/' component={LoginComponent}/>
                         <Route path='/staff/filter' component={FilterFormComponent}/>
                         <Route path='/staff/result' component={FilterResultComponent}/>
                         <Route path='/staff/info' component={StaffInfoComponent}/>
-                    </Switch>           
+                        <Route path='/staff/add' component={Staff}/>
+                        <Route path='/staff/edit' component={Staff}/>
+                    </Switch>                    
                 </Router>
             </Provider>
         );

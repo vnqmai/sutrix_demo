@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export class NavbarComponent extends React.Component{
     constructor(){
@@ -28,14 +29,14 @@ export class NavbarComponent extends React.Component{
                                 <li>
                                     <ul>
                                         <li><b>Welcome <span>Admin</span></b></li>
-                                        <li><a href="" id="logoutDropdown">Logout</a></li>
+                                        <li><Link to='/logout' id="logoutDropdown">Logout</Link></li>
                                     </ul>
                                 </li>
                                 <hr/>
                                 <li>
                                     <ul>
-                                        <li><a href="" className="active">Dashboard</a></li>
-                                        <li><a href="">Staff</a></li>
+                                        <li><Link to='/dashboard' className="active">Dashboard</Link></li>
+                                        <li><Link to='/staff'>Staff</Link></li>
                                     </ul>
                                 </li>
                             </ul>

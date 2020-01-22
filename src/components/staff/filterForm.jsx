@@ -74,8 +74,8 @@ const mapStateToProps = state => {
 
 const mapDistpatchToProps = dispatch => {
     return {
-        applyFilter: (fullname, department) => {
-            dispatch(applyFilter(fullname,department));
+        applyFilter: (data) => {
+            dispatch(applyFilter(data));
         }        
     }
 }
