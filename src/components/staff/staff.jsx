@@ -43,8 +43,7 @@ class Staff extends React.Component{
 
     handleInputChange(e) {
         let formData = Object.assign({}, this.state.newStaff);
-        formData[e.target.name] = e.target.value;
-        console.log('inputs: ',formData);
+        formData[e.target.name] = e.target.value;        
         this.setState({newStaff: formData});
     }
 
