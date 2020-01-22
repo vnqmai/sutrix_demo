@@ -1,21 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { axios } from 'axios';
+import { StaffHistories } from './staffHistories';
 
-class StaffInfoComponent extends React.Component{    
+export default class StaffInfoComponent extends React.Component{    
     constructor(){
         super();
-        this.state = {
-            histories: []
-        }         
-    }
 
-    componentDidMount() {        
-        axios.get("http://localhost:3001/staffHistory/5e2834c3fe643132d41f8120").then(res => {
-            this.setState({
-                histories: res.data
-            })
-        })
     }
 
     render(){
@@ -79,31 +68,7 @@ class StaffInfoComponent extends React.Component{
                     </div>
                 </div>
 
-                <div className="row history">
-                    <div className="col-lg-12">
-                        <h4>History:</h4>
-                    </div>
-
-                    {this.state.histories.map((history, index)=>{
-                        return(
-                            <div className="col-lg-12" key={index}>
-                                <div className="panel panel-default">
-                                    <div className="panel-heading">
-                                        <h3 className="panel-title">
-                                            <b>{history.historyDate}</b>
-                                            <button type="button" className="close">x</button>
-                                        </h3>
-                                    </div>
-                                    <div className="panel-body">
-                                        {history.historyActivity}
-                                    </div>
-                                </div>
-                            </div>
-                        );
-
-                    })}
-
-                </div>
+                <StaffHistories staffId={staff._id}></StaffHistories>
 
                 <div className="row write-note">
                     <form>
@@ -121,11 +86,3 @@ class StaffInfoComponent extends React.Component{
         );
     }
 }
-
-const mapStateToProps = state => {
-    return {
-        staff: state.staff.staffInfo
-    }
-}
-
-export default connect(mapStateToProps)(StaffInfoComponent);
