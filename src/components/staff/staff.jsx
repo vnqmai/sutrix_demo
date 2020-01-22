@@ -44,11 +44,24 @@ class Staff extends React.Component{
         this.setState({newStaff: formData});
     }
 
-    addNewStaff = (staff) => {
-        axios.post('http://localhost:3001/staff', staff).then(res=>{
-            return true;
-        }).then(err=>{
-            return false;
+    addNewStaff = () => {
+        axios.post('http://localhost:3001/staff', this.state.newStaff).then(res=>{
+            this.props.addNewStaff(true);
+            this.setState({
+                newStaff: {
+                    firstName: '',
+                    lastName: '',
+                    birthDate: '',
+                    gender: '',
+                    address: '',
+                    id: null,
+                    mobile: '',
+                    skype: '',
+                    email: '',
+                    joinDate: '',
+                    department: ''
+                }
+            });
         });
     }
 
@@ -113,9 +126,7 @@ class Staff extends React.Component{
                             </tr>                            
                             <tr>
                                 <td colspan="2" class="right">
-                                    <input type="submit" value={this.props.type==='edit'?'Edit':'Add'} class="btn-orange" 
-                                    onClick={this.props.addNewStaff(this.addNewStaff(this.state.newStaff))}
-                                    />
+                                    <input type="button" value={this.props.type==='edit'?'Edit':'Add'} class="btn-orange" onClick={this.addNewStaff}/>
                                 </td>
                             </tr>       
                             <tr>

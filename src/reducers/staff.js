@@ -21,6 +21,14 @@ export const staffReducer = (state = initState, action) => {
                 }
             }
 
+        case 'UPDATE_STAFF':
+            {
+                return {
+                    ...state,
+                    staffInfo: action.staffInfo
+                }
+            }
+
         default:
             {
                 return {

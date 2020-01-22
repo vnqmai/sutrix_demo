@@ -9,13 +9,13 @@ export const filterReducer = (state = initState, action) => {
         case 'APPLY_FILTER':
             {
                 return {
-                    // ...state,
+                    ...state,
                     staff: action.data
                 }
             }
         default:
             {
-                return state;
+                return {...state };
             }
     }
 }
