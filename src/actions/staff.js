@@ -12,3 +12,10 @@ export const addNewStaff = (addSuccess) => {
         addSuccess
     }
 }
+
+export const updateStaff = (updateSuccess) => {
+    return {
+        type: 'UPDATE_STAFF',
+        updateSuccess
+    }
+}

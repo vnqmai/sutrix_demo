@@ -38,8 +38,20 @@ class App extends React.Component {
                         <Route path='/staff/filter' component={FilterFormComponent}/>
                         <Route path='/staff/result' component={FilterResultComponent}/>
                         <Route path='/staff/info' component={StaffInfoComponent}/>
-                        <Route path='/staff/add' component={Staff}/>
-                        <Route path='/staff/edit' component={Staff}/>
+                        <Route path='/staff/add' component={() => <Staff type='add'/>}/>
+                        <Route path='/staff/edit' component={()=><Staff type='edit' currentStaff={{
+                            _id: "5e2834c3fe643132d41f8120",
+                            firstName: "Mai",
+                            lastName: "Vo",
+                            birthDate: null,
+                            gender: false,
+                            address: "biow",
+                            mobile: "51561",
+                            skype: "151",
+                            email: "vnqmai@yahoo.com",
+                            joinDate: null,
+                            department: "Frontend"
+                        }}/>}/>
                     </Switch>                    
                 </Router>
             </Provider>

@@ -1,6 +1,7 @@
 const initState = {
     staffInfo: {},
-    addSuccess: false
+    addSuccess: false,
+    updateSuccess: false
 };
 
 export const staffReducer = (state = initState, action) => {
@@ -25,7 +26,7 @@ export const staffReducer = (state = initState, action) => {
             {
                 return {
                     ...state,
-                    staffInfo: action.staffInfo
+                    updateSuccess: true
                 }
             }
 
