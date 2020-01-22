@@ -118,12 +118,20 @@ class Staff extends React.Component{
                             </tr>
                             <tr>
                                 <td>Gender:</td>
+                                {this.props.type==='edit'?
                                 <td>
                                     <input type="radio" name="gender" value={true} onChange={this.handleInputChange} 
-                                    checked={this.state.newStaff?(this.state.newStaff.gender?true:false):true}/> Male
+                                    checked={this.state.newStaff.gender?true:false}/> Male
                                     <input type="radio" name="gender" value={false} onChange={this.handleInputChange}
-                                    checked={this.state.newStaff?(this.state.newStaff.gender?false:true):false}/> Female
-                                </td>
+                                    checked={this.state.newStaff.gender?false:true}/> Female
+                                </td>:''}
+                                {this.props.type==='add'?
+                                <td>
+                                    <input type="radio" name="gender" value={true} onChange={this.handleInputChange} 
+                                    checked/> Male
+                                    <input type="radio" name="gender" value={false} onChange={this.handleInputChange}
+                                    /> Female
+                                </td>:''}
                             </tr>
                             <tr>
                                 <td>Address:</td>

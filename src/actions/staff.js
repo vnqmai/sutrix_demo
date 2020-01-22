@@ -1,8 +1,7 @@
-export const getStaffInfo = (staffInfo, staffHistories) => {
+export const getStaffInfo = (staffInfo) => {
     return {
         type: 'GET_STAFF_INFO',
-        staffInfo,
-        staffHistories
+        staffInfo
     }
 }
 

@@ -3,8 +3,24 @@ import { connect } from 'react-redux';
 import { axios } from 'axios';
 
 class StaffInfoComponent extends React.Component{    
+    constructor(){
+        super();
+        this.state = {
+            histories: []
+        }         
+    }
+
+    componentDidMount() {        
+        axios.get("http://localhost:3001/staffHistory/5e2834c3fe643132d41f8120").then(res => {
+            this.setState({
+                histories: res.data
+            })
+        })
+    }
 
     render(){
+        const staff = this.props.location.state;
+        console.log(staff);
         return(
             <div className="container content">
                 <div className="row profile">
@@ -12,47 +28,47 @@ class StaffInfoComponent extends React.Component{
                         <table className="info-table">
                             <tr>
                                 <td>First Name:</td>
-                                <td>{this.props.staff.firstName}</td>
+                                <td>{staff.firstName}</td>
                             </tr>
                             <tr>
                                 <td>Last Name:</td>
-                                <td>{this.props.staff.lastName}</td>
+                                <td>{staff.lastName}</td>
                             </tr>
                             <tr>
                                 <td>Date of birth:</td>
-                                <td>{this.props.staff.birthDate}</td>
+                                <td>{staff.birthDate}</td>
                             </tr>
                             <tr>
                                 <td>Gender:</td>
-                                <td>{this.props.staff.gender}</td>
+                                <td>{staff.gender}</td>
                             </tr>
                             <tr>
                                 <td>Address:</td>
-                                <td>{this.props.staff.address}</td>
+                                <td>{staff.address}</td>
                             </tr>
                             <tr>
                                 <td>ID:</td>
-                                <td>{this.props.staff._id}</td>
+                                <td>{staff._id}</td>
                             </tr>
                             <tr>
                                 <td>Mobile:</td>
-                                <td>{this.props.staff.mobile}</td>
+                                <td>{staff.mobile}</td>
                             </tr>
                             <tr>
                                 <td>Skype:</td>
-                                <td>{this.props.staff.skype}</td>
+                                <td>{staff.skype}</td>
                             </tr>
                             <tr>
                                 <td>Email:</td>
-                                <td>{this.props.staff.email}</td>
+                                <td>{staff.email}</td>
                             </tr>
                             <tr>
                                 <td>Join Date:</td>
-                                <td>{this.props.staff.joinDate}</td>
+                                <td>{staff.joinDate}</td>
                             </tr>
                             <tr>
                                 <td>Department:</td>
-                                <td>{this.props.staff.department}</td>
+                                <td>{staff.department}</td>
                             </tr>
                         </table>
                     </div>
@@ -68,7 +84,7 @@ class StaffInfoComponent extends React.Component{
                         <h4>History:</h4>
                     </div>
 
-                    {/* {this.props.staffHistories.map((history, index)=>{
+                    {this.state.histories.map((history, index)=>{
                         return(
                             <div className="col-lg-12" key={index}>
                                 <div className="panel panel-default">
@@ -85,7 +101,7 @@ class StaffInfoComponent extends React.Component{
                             </div>
                         );
 
-                    })} */}
+                    })}
 
                 </div>
 
