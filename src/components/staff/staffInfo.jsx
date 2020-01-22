@@ -69,19 +69,7 @@ export default class StaffInfoComponent extends React.Component{
                 </div>
 
                 <StaffHistories staffId={staff._id}></StaffHistories>
-
-                <div className="row write-note">
-                    <form>
-                        <table className="form-table">
-                            <tr>
-                                <td><textarea name="note" id="note" rows="3" placeholder="Write a note"></textarea></td>
-                            </tr>
-                            <tr>
-                                <td className="center"><input type="submit" value="Add" className="btn-orange"/></td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
+                
             </div>
         );
     }
