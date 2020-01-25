@@ -20,10 +20,12 @@ class Staff extends React.Component{
                     skype: '',
                     email: '',
                     joinDate: '',
-                    department: ''
+                    department: '',
+                    image: {}
                 }            
         }
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputFileChange = this.handleInputFileChange.bind(this);
     }
 
     getDepartments = () => {
@@ -44,11 +46,45 @@ class Staff extends React.Component{
     handleInputChange(e) {
         let formData = Object.assign({}, this.state.newStaff);
         formData[e.target.name] = e.target.value;        
-        this.setState({newStaff: formData});
+        this.setState({newStaff: formData});        
+    }
+
+    handleInputFileChange(e){
+        let formData = Object.assign({}, this.state.newStaff);        
+        formData.image = e.target.files[0];
+        this.setState({
+            newStaff: formData
+        })
+
+        // load image from local to img src
+        if (FileReader && formData.image) {
+            var fr = new FileReader();
+            fr.onload = function () {
+                document.getElementById('staffPhoto').src = fr.result;
+            }
+            fr.readAsDataURL(formData.image);
+        }
+        console.log('newstaff', this.state.newStaff);
     }
 
     addNewStaff = () => {
-        axios.post('http://localhost:3001/staff', this.state.newStaff).then(res=>{
+        const newStaff = this.state.newStaff;
+        const fd = new FormData();
+        for ( var key in  newStaff) {
+            if(key==='image')
+                break;
+            fd.append(key, newStaff[key]);
+        }
+        fd.append('image', this.state.newStaff.image, this.state.newStaff.image.name);
+        
+        console.log('formdata', fd.get(0));
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+
+        axios.post('http://localhost:3001/staff', fd, config).then(res=>{
             this.props.addNewStaff(true);
             this.setState({
                 newStaff: {
@@ -87,6 +123,11 @@ class Staff extends React.Component{
                 }
             })
         })
+    }
+
+    inputFileClick = () => {
+        document.getElementById('image').click();
+            
     }
 
     render(){
@@ -209,9 +250,10 @@ class Staff extends React.Component{
                 </div>
                 <div class="col-lg-4 col-md-4 col-lg-12 staff-picture">
                     <div class="staff-image">
-                        <img src="/images/alt_picture.png" alt="" class="img"/>
+                        <img src='/images/alt_picture.png' alt="" class="img" id="staffPhoto"/>
                         <div class="description">
-                            <img src="/images/picture.png" alt="" class="icon"/> Choose image format available JPG, PNG, GIF copy
+                            <img src="/images/picture.png" alt="" onClick={()=>this.inputFileClick()} for="image"/> Choose image format available JPG, PNG, GIF copy
+                            <input type="file" name="image" id="image" style={{"display": "none"}} onChange={this.handleInputFileChange}/>
                         </div>
                     </div>
                 </div>
