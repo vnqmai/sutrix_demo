@@ -249,7 +249,7 @@ class Staff extends React.Component{
                 </div>
                 <div class="col-lg-4 col-md-4 col-lg-12 staff-picture">
                     <div class="staff-image">
-                        <img src={this.state.newStaff?this.state.newStaff.image:'/images/picture.png'} alt="" class="img" id="staffPhoto"/>
+                        <img src={this.state.newStaff?this.state.newStaff.image:'/images/alt_picture.png'} alt="" class="img" id="staffPhoto"/>
                         <div class="description">
                             <img src='/images/picture.png' alt="" onClick={()=>this.inputFileClick()} for="image"/> Choose image format available JPG, PNG, GIF copy
                             <input type="file" name="image" id="image" style={{"display": "none"}} onChange={this.handleInputFileChange}/>
