@@ -76,8 +76,7 @@ class Staff extends React.Component{
             fd.append(key, newStaff[key]);
         }
         fd.append('image', this.state.newStaff.image, this.state.newStaff.image.name);
-        
-        console.log('formdata', fd.get(0));
+                
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'
@@ -105,23 +104,23 @@ class Staff extends React.Component{
     }
 
     updateStaff = () => {
-        axios.put('http://localhost:3001/staff', this.state.newStaff).then(res=>{
-            this.props.updateStaff(true);
-            this.setState({
-                newStaff: {
-                    firstName: '',
-                    lastName: '',
-                    birthDate: '',
-                    gender: '',
-                    address: '',
-                    id: null,
-                    mobile: '',
-                    skype: '',
-                    email: '',
-                    joinDate: '',
-                    department: ''
-                }
-            })
+        const newStaff = this.state.newStaff;
+        const fd = new FormData();
+        for ( var key in  newStaff) {
+            if(key==='image')
+                break;
+            fd.append(key, newStaff[key]);
+        }
+        fd.append('image', this.state.newStaff.image, this.state.newStaff.image.name);
+                
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+
+        axios.put('http://localhost:3001/staff', fd, config).then(res=>{
+            this.props.updateStaff(true);            
         })
     }
 
@@ -130,7 +129,7 @@ class Staff extends React.Component{
             
     }
 
-    render(){
+    render(){        
         return(
             <div class="container content">
                 <div class="col-lg-8 col-md-8 col-lg-12">                    
@@ -250,9 +249,9 @@ class Staff extends React.Component{
                 </div>
                 <div class="col-lg-4 col-md-4 col-lg-12 staff-picture">
                     <div class="staff-image">
-                        <img src='/images/alt_picture.png' alt="" class="img" id="staffPhoto"/>
+                        <img src={this.state.newStaff?this.state.newStaff.image:'/images/picture.png'} alt="" class="img" id="staffPhoto"/>
                         <div class="description">
-                            <img src="/images/picture.png" alt="" onClick={()=>this.inputFileClick()} for="image"/> Choose image format available JPG, PNG, GIF copy
+                            <img src='/images/picture.png' alt="" onClick={()=>this.inputFileClick()} for="image"/> Choose image format available JPG, PNG, GIF copy
                             <input type="file" name="image" id="image" style={{"display": "none"}} onChange={this.handleInputFileChange}/>
                         </div>
                     </div>

@@ -50,7 +50,8 @@ class App extends React.Component {
                             skype: "151",
                             email: "vnqmai@yahoo.com",
                             joinDate: null,
-                            department: "Frontend"
+                            department: "Frontend",
+                            image:"http://localhost:3001/assets/images/staff/nhac-tre-15479941159931316049405.jpg"                            
                         }}/>}/>
                     </Switch>                    
                 </Router>
