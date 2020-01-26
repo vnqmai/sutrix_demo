@@ -271,3 +271,12 @@ textarea {
 .write-note>form>table {
     width: 96%;
 }
+
+
+/* chartjs */
+
+.chartjs-render-monitor {
+    background-color: #f5f5f5;
+    margin: 5% auto;
+    padding: 10px;
+}

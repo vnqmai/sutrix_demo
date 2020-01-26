@@ -18,6 +18,7 @@ import FilterFormComponent from './components/staff/filterForm';
 import FilterResultComponent from './components/staff/filterResult';
 import StaffInfoComponent from './components/staff/staffInfo';
 import Staff from './components/staff/staff';
+import { Chart } from './components/dashboard/chart';
 
 
 
@@ -53,6 +54,7 @@ class App extends React.Component {
                             department: "Frontend",
                             image:"http://localhost:3001/assets/images/staff/nhac-tre-15479941159931316049405.jpg"                            
                         }}/>}/>
+                        <Route path='/dashboard' component={Chart}/>
                     </Switch>                    
                 </Router>
             </Provider>
