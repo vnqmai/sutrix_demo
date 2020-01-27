@@ -1,5 +1,5 @@
 import React from 'react';
-import { StaffHistories } from './staffHistories';
+import StaffHistories from './staffHistories';
 
 export default class StaffInfoComponent extends React.Component{    
     constructor(){

@@ -5,17 +5,14 @@ import { login, logout } from '../../actions/auth';
 
 class NavbarComponent extends React.Component{
     constructor(){
-        super();
+        super();        
     }
 
-    componentDidMount(){
-        console.log('path: ',this.props.path);
-    }
-    render(){
+    render(){        
         return(                        
             <nav className="navbar navbar-default" role="navigation">            
                 <div className="navbar-header">
-                    <button type="button" className="navbar-toggle" id="back">
+                    <button type="button" className={this.props.history.location.pathname!=='/'?'navbar-toggle show':'navbar-toggle'} id="back" onClick={this.props.history.goBack}>
                         <img src="/images/back.png" alt="<" id="back"/>
                     </button>
 
@@ -33,14 +30,14 @@ class NavbarComponent extends React.Component{
                                     <li>
                                         <ul>
                                             <li><b>Welcome <span>{this.props.username}</span></b></li>
-                                            <li><a id="logoutDropdown" onClick={this.props.logout}>Logout</a></li>
+                                            <li><Link to='/' id="logoutDropdown" onClick={this.props.logout}>Logout</Link></li>
                                         </ul>
                                     </li>
                                     <hr/>
                                     <li>
                                         <ul>
-                                            <li><Link to='/dashboard' className="active">Dashboard</Link></li>
-                                            <li><Link to='/staff'>Staff</Link></li>
+                                            <li><Link to='/dashboard' className={window.location.pathname==='/dashboard'?'active':''}>Dashboard</Link></li>
+                                            <li><Link to='/staff/filter'className={window.location.pathname==='/staff/filter'?'active':''}>Staff</Link></li>
                                         </ul>
                                     </li>
                                 </ul>

@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-export class StaffHistories extends React.Component{
+class StaffHistories extends React.Component{
     constructor(){
         super();
         this.state = {
@@ -16,7 +17,8 @@ export class StaffHistories extends React.Component{
     }
 
     getHistories = () => {
-        axios.get('http://localhost:3001/staffHistory/'+this.props.staffId).then(res => {
+        const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
+        axios.get('http://localhost:3001/staffHistory/'+this.props.staffId, config).then(res => {
             this.setState({
                 histories: res.data
             })
@@ -26,7 +28,8 @@ export class StaffHistories extends React.Component{
     }
 
     removeHistory = (historyId) => {
-        axios.delete('http://localhost:3001/staffHistory/'+historyId).then(res=>{
+        const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
+        axios.delete('http://localhost:3001/staffHistory/'+historyId, config).then(res=>{
             this.setState({
                 histories: res.data
             })
@@ -34,7 +37,8 @@ export class StaffHistories extends React.Component{
     }
 
     addHistory = (history) => {
-        axios.post('http://localhost:3001/staffHistory', history).then(res=>{
+        const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
+        axios.post('http://localhost:3001/staffHistory', history, config).then(res=>{
             this.setState({
                 histories: res.data
             })
@@ -86,3 +90,11 @@ export class StaffHistories extends React.Component{
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token
+    }
+}
+
+export default connect(mapStateToProps)(StaffHistories);

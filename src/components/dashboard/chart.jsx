@@ -1,8 +1,9 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
-export class Chart extends React.Component{
+class Chart extends React.Component{
     constructor(){
         super();
         this.state = {
@@ -32,8 +33,9 @@ export class Chart extends React.Component{
         return res;
     }
 
-    componentDidMount(){
-        axios.get('http://localhost:3001/analyse').then(res=>{
+    componentDidMount(){        
+        const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
+        axios.get('http://localhost:3001/analyse',config).then(res=>{            
             this.setState({
                 chartData: {
                     labels: this.getDataColumns(res.data,'_id'),
@@ -90,3 +92,11 @@ export class Chart extends React.Component{
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token
+    }
+}
+
+export default connect(mapStateToProps)(Chart);

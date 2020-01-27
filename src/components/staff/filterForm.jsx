@@ -16,7 +16,8 @@ class FilterFormComponent extends React.Component{
     }
 
     componentDidMount(){
-        axios.get('http://localhost:3001/department').then(res=>{
+        const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
+        axios.get('http://localhost:3001/department', config).then(res=>{
             this.setState({
                 departments: res.data
             })
@@ -28,13 +29,18 @@ class FilterFormComponent extends React.Component{
     // }
 
     doApplyFilter = () => {
-        axios.post('http://localhost:3001/staff/filter', { fullname: this.state.fullname, department: this.state.department })
+        const config = {
+            headers: { Authorization: `Bearer ${this.props.token}` }
+        };
+
+        axios.post('http://localhost:3001/staff/filter', { fullname: this.state.fullname, department: this.state.department }, config)
             .then(res => {
                 this.props.applyFilter(res.data);
+                this.props.history.push('/staff/result');
             })                
     }
 
-    render(){
+    render(){        
         return(            
                 <div className="filter">
                     
@@ -56,7 +62,7 @@ class FilterFormComponent extends React.Component{
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <Link className="btn-orange" to="/staff/result" onClick={this.doApplyFilter()}> Apply</Link>
+                                    <Link className="btn-orange" to="/staff/result" onClick={this.doApplyFilter}> Apply</Link>
                                     {/* onClick={this.applyFilter(this.state.fullname,this.state.department)} */}
                                 </td>
                             </tr>
@@ -68,7 +74,8 @@ class FilterFormComponent extends React.Component{
 
 const mapStateToProps = state => {
     return{
-        staff: state.filter.staff
+        staff: state.filter.staff,
+        token: state.auth.token
     }
 }
 

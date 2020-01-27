@@ -29,7 +29,8 @@ class Staff extends React.Component{
     }
 
     getDepartments = () => {
-        axios.get('http://localhost:3001/department').then(res=>{
+        const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
+        axios.get('http://localhost:3001/department', config).then(res=>{
             this.setState({
                 departments: res.data
             })
@@ -79,7 +80,8 @@ class Staff extends React.Component{
                 
         const config = {
             headers: {
-                'content-type': 'multipart/form-data'
+                'content-type': 'multipart/form-data',
+                'Authorization': `Bearer ${this.props.token}`
             }
         };
 
@@ -115,7 +117,8 @@ class Staff extends React.Component{
                 
         const config = {
             headers: {
-                'content-type': 'multipart/form-data'
+                'content-type': 'multipart/form-data',
+                'Authorization': `Bearer ${this.props.token}`
             }
         };
 
@@ -265,7 +268,8 @@ class Staff extends React.Component{
 const mapStateToProps = state => {
     return{
         addSuccess: state.staff.addSuccess,
-        updateSuccess: state.staff.updateSuccess
+        updateSuccess: state.staff.updateSuccess,
+        token: state.auth.token
     }
 }
 
