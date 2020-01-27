@@ -132,6 +132,7 @@ body {
 
 #logoutDropdown {
     font-weight: normal;
+    cursor: pointer;
 }
 
 .dropdown {

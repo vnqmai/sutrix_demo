@@ -1,17 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { login, logout } from '../../actions/auth';
 
-export class LoginComponent extends React.Component{
+class LoginComponent extends React.Component{
     constructor(){
         super();
         this.state = {
             user: {
                 username: '',
                 password: ''
-            },
-            loginResult:{
-                isSuccess: false,
-                errorMessage: ''
             }
         }
         this.handleInputsChange = this.handleInputsChange.bind(this);
@@ -28,9 +26,17 @@ export class LoginComponent extends React.Component{
     checkLoginInfo = (user) => {
         console.log("user",user);
         axios.post('http://localhost:3001/login',user).then(res=>{
-            this.setState({
-                loginResult: res.data
-            })
+            if(res.data.data){
+                if(res.data.data.token){                    
+                    this.props.login(res.data.data.userId, res.data.data.username,res.data.data.token, res.data.data.expires);
+                    this.setState({
+                        user: {
+                            username: '',
+                            password: ''
+                        }
+                    })
+                }                    
+            }            
         })
     }
 
@@ -42,11 +48,11 @@ export class LoginComponent extends React.Component{
                         <table className="form-table">
                             <tr>
                                 <td>Username:</td>
-                                <td><input type="text" name="username" onChange={this.handleInputsChange}/></td>
+                                <td><input type="text" name="username" onChange={this.handleInputsChange} value={this.state.user.username}/></td>
                             </tr>
                             <tr>
                                 <td>Password:</td>
-                                <td><input type="password" name="password" onChange={this.handleInputsChange}/></td>
+                                <td><input type="password" name="password" onChange={this.handleInputsChange} value={this.state.user.password}/></td>
                             </tr>
                             <tr>
                                 <td colspan="2">
@@ -55,7 +61,7 @@ export class LoginComponent extends React.Component{
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    {this.state.loginResult?(this.state.loginResult.isSuccess?'Success': this.state.loginResult.errorMessage):''}
+                                    {this.props.token?'Success':''}
                                 </td>
                             </tr>
                         </table>
@@ -65,3 +71,25 @@ export class LoginComponent extends React.Component{
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {        
+        userId: state.auth.userId,
+        username: state.auth.username,
+        token: state.auth.token,
+        expires: state.auth.expires
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        login: (userId, username,token, expires) => {
+            dispatch(login(userId, username,token, expires));
+        },
+        logout: () => {
+            dispatch(logout())
+        }
+    };
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(LoginComponent);

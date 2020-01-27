@@ -11,9 +11,9 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import './public/css/style.css';
 
 // import components
-import { NavbarComponent } from './components/header/navbar';
+import NavbarComponent from './components/header/navbar';
 import { BreadcrumbsComponent } from './components/header/breadcrums';
-import { LoginComponent } from './components/login/login';
+import LoginComponent from './components/login/login';
 import FilterFormComponent from './components/staff/filterForm';
 import FilterResultComponent from './components/staff/filterResult';
 import StaffInfoComponent from './components/staff/staffInfo';
