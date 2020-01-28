@@ -27,7 +27,7 @@ class LoginComponent extends React.Component{
     }
 
     checkLoginInfo = (user) => {        
-        axios.post('http://localhost:3001/login',user).then(res=>{
+        axios.post('https://sutrix-be.herokuapp.com/login',user).then(res=>{
             if(res.data.data){
                 if(res.data.data.token){                    
                     this.props.login(res.data.data.userId, res.data.data.username,res.data.data.token, res.data.data.expires);                                        

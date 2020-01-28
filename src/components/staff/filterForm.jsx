@@ -17,7 +17,7 @@ class FilterFormComponent extends React.Component{
 
     componentDidMount(){
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.get('http://localhost:3001/department', config).then(res=>{
+        axios.get('https://sutrix-be.herokuapp.com/department', config).then(res=>{
             this.setState({
                 departments: res.data
             })
@@ -33,7 +33,7 @@ class FilterFormComponent extends React.Component{
             headers: { Authorization: `Bearer ${this.props.token}` }
         };
 
-        axios.post('http://localhost:3001/staff/filter', { fullname: this.state.fullname, department: this.state.department }, config)
+        axios.post('https://sutrix-be.herokuapp.com/staff/filter', { fullname: this.state.fullname, department: this.state.department }, config)
             .then(res => {
                 this.props.applyFilter(res.data);
                 this.props.history.push('/staff/result');

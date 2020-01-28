@@ -12,7 +12,7 @@ class NavbarComponent extends React.Component{
         return(                        
             <nav className="navbar navbar-default" role="navigation">            
                 <div className="navbar-header">
-                    <button type="button" className={(this.props.history.location.pathname!=='/' && this.props.history.location.pathname!=='/staff/filter')?'navbar-toggle show':'navbar-toggle'} 
+                    <button type="button" className={(this.props.history.location.pathname!=='/' && this.props.history.location.pathname!=='/staff/filter')?'navbar-toggle show':'navbar-toggle hide'} 
                     id="back" onClick={this.props.history.goBack}>
                         <img src="/images/back.png" alt="<" id="back"/>
                     </button>

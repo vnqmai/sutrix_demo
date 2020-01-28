@@ -30,7 +30,7 @@ class StaffEdit extends React.Component{
 
     getDepartments = () => {
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.get('http://localhost:3001/department', config).then(res=>{
+        axios.get('https://sutrix-be.herokuapp.com/department', config).then(res=>{
             this.setState({
                 departments: res.data
             })
@@ -87,7 +87,7 @@ class StaffEdit extends React.Component{
             }
         };
 
-        axios.put('http://localhost:3001/staff', fd, config).then(res=>{
+        axios.put('https://sutrix-be.herokuapp.com/staff', fd, config).then(res=>{
             this.props.updateStaff(true);            
         })
     }
@@ -198,7 +198,7 @@ class StaffEdit extends React.Component{
                 </div>
                 <div class="col-lg-4 col-md-4 col-lg-12 staff-picture">
                     <div class="staff-image">
-                        <img src={this.props.staffInfo.image?this.props.staffInfo.image:'http://localhost:3001/assets/images/alt_picture.png'} alt="" class="img" id="staffPhoto"/>
+                        <img src={this.props.staffInfo.image?this.props.staffInfo.image:'https://sutrix-be.herokuapp.com/assets/images/alt_picture.png'} alt="" class="img" id="staffPhoto"/>
                         <div class="description">
                             <img src='/images/picture.png' alt="" onClick={()=>this.inputFileClick()} for="image"/> Choose image format available JPG, PNG, GIF copy
                             <input type="file" name="image" id="image" style={{"display": "none"}} onChange={this.handleInputFileChange}/>

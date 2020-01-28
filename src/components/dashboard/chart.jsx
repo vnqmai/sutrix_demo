@@ -35,7 +35,7 @@ class Chart extends React.Component{
 
     componentDidMount(){        
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.get('http://localhost:3001/analyse',config).then(res=>{            
+        axios.get('https://sutrix-be.herokuapp.com/analyse',config).then(res=>{            
             this.setState({
                 chartData: {
                     labels: this.getDataColumns(res.data,'_id'),
