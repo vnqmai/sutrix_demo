@@ -281,3 +281,10 @@ textarea {
     margin: 5% auto;
     padding: 10px;
 }
+
+
+/* a */
+
+.clickable {
+    cursor: pointer;
+}

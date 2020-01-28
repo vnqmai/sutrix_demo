@@ -1,9 +1,10 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { getStaffInfo } from '../../actions/staff';
 
-export class FilterResultDetails extends React.Component {    
+class FilterResultDetails extends React.Component {    
     moveToStaffInfo = () => {
+        this.props.getStaffInfo(this.props.staff);
         this.props.history.push('/staff/info',this.props.staff);
     }
 
@@ -20,3 +21,13 @@ export class FilterResultDetails extends React.Component {
         );
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return{
+        getStaffInfo: (data) => {
+            dispatch(getStaffInfo(data));
+        }
+    }
+}
+
+export default connect(null,mapDispatchToProps)(FilterResultDetails);

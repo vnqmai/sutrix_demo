@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { addNewStaff, updateStaff } from '../../actions/staff';
 
-class Staff extends React.Component{
+class StaffEdit extends React.Component{
     constructor(){
         super();
         this.state = {
@@ -22,7 +22,7 @@ class Staff extends React.Component{
                     joinDate: '',
                     department: '',
                     image: {}
-                }            
+                }       
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleInputFileChange = this.handleInputFileChange.bind(this);
@@ -37,12 +37,13 @@ class Staff extends React.Component{
         });
     }
 
-    componentDidMount(){
+    componentDidMount(){        
         this.getDepartments();
+        
         this.setState({
-            newStaff: this.props.currentStaff
+            newStaff: this.props.staffInfo
         })
-    }
+    }    
 
     handleInputChange(e) {
         let formData = Object.assign({}, this.state.newStaff);
@@ -64,46 +65,8 @@ class Staff extends React.Component{
                 document.getElementById('staffPhoto').src = fr.result;
             }
             fr.readAsDataURL(formData.image);
-        }
-        console.log('newstaff', this.state.newStaff);
-    }
-
-    addNewStaff = () => {
-        const newStaff = this.state.newStaff;
-        const fd = new FormData();
-        for ( var key in  newStaff) {
-            if(key==='image')
-                break;
-            fd.append(key, newStaff[key]);
-        }
-        fd.append('image', this.state.newStaff.image, this.state.newStaff.image.name);
-                
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        };
-
-        axios.post('http://localhost:3001/staff', fd, config).then(res=>{
-            this.props.addNewStaff(true);
-            this.setState({
-                newStaff: {
-                    firstName: '',
-                    lastName: '',
-                    birthDate: '',
-                    gender: '',
-                    address: '',
-                    id: null,
-                    mobile: '',
-                    skype: '',
-                    email: '',
-                    joinDate: '',
-                    department: ''
-                }
-            });
-        });
-    }
+        }        
+    }    
 
     updateStaff = () => {
         const newStaff = this.state.newStaff;
@@ -113,7 +76,9 @@ class Staff extends React.Component{
                 break;
             fd.append(key, newStaff[key]);
         }
-        fd.append('image', this.state.newStaff.image, this.state.newStaff.image.name);
+                
+        if(this.state.newStaff.image!==this.props.staffInfo.image)
+            fd.append('image', this.state.newStaff.image, this.state.newStaff.image.name);
                 
         const config = {
             headers: {
@@ -132,7 +97,7 @@ class Staff extends React.Component{
             
     }
 
-    render(){        
+    render(){
         return(
             <div class="container content">
                 <div class="col-lg-8 col-md-8 col-lg-12">                    
@@ -160,20 +125,12 @@ class Staff extends React.Component{
                             </tr>
                             <tr>
                                 <td>Gender:</td>
-                                {this.props.type==='edit'?
                                 <td>
                                     <input type="radio" name="gender" value={true} onChange={this.handleInputChange} 
                                     checked={this.state.newStaff.gender?true:false}/> Male
                                     <input type="radio" name="gender" value={false} onChange={this.handleInputChange}
                                     checked={this.state.newStaff.gender?false:true}/> Female
-                                </td>:''}
-                                {this.props.type==='add'?
-                                <td>
-                                    <input type="radio" name="gender" value={true} onChange={this.handleInputChange} 
-                                    checked/> Male
-                                    <input type="radio" name="gender" value={false} onChange={this.handleInputChange}
-                                    /> Female
-                                </td>:''}
+                                </td>
                             </tr>
                             <tr>
                                 <td>Address:</td>
@@ -231,28 +188,17 @@ class Staff extends React.Component{
                             </tr>                            
                             <tr>
                                 <td colspan="2" class="right">
-                                    {
-                                        this.props.type==='add'?
-                                        <input type="button" value={'Add'} class="btn-orange" onClick={this.addNewStaff}/>:''                                                                            
-                                    }                                    
-                                    {
-                                        this.props.type==='edit'?
-                                        <input type="button" value={'Edit'} class="btn-orange" onClick={this.updateStaff}/>:''
-                                    }
-
-                                    {/* <input type="button" value={'Add'} class="btn-orange" onClick={this.addNewStaff}/>:
-                                    <input type="button" value={'Edit'} class="btn-orange" onClick={this.updateStaff}/> */}
+                                    <input type="button" value={'Edit'} class="btn-orange" onClick={this.updateStaff}/>
                                 </td>
                             </tr>       
-                            <tr>
-                                    <td>{this.props.addSuccess?"Add Success":""}</td>
+                            <tr>                                    
                                     <td>{this.props.updateSuccess?"Update Success":""}</td>
                             </tr>                     
                         </table>                    
                 </div>
                 <div class="col-lg-4 col-md-4 col-lg-12 staff-picture">
                     <div class="staff-image">
-                        <img src={this.state.newStaff?this.state.newStaff.image:'/images/alt_picture.png'} alt="" class="img" id="staffPhoto"/>
+                        <img src={this.props.staffInfo.image?this.props.staffInfo.image:'http://localhost:3001/assets/images/alt_picture.png'} alt="" class="img" id="staffPhoto"/>
                         <div class="description">
                             <img src='/images/picture.png' alt="" onClick={()=>this.inputFileClick()} for="image"/> Choose image format available JPG, PNG, GIF copy
                             <input type="file" name="image" id="image" style={{"display": "none"}} onChange={this.handleInputFileChange}/>
@@ -267,21 +213,18 @@ class Staff extends React.Component{
 
 const mapStateToProps = state => {
     return{
-        addSuccess: state.staff.addSuccess,
+        staffInfo: state.staff.staffInfo,
         updateSuccess: state.staff.updateSuccess,
-        token: state.auth.token
+        token: state.auth.token,        
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-        addNewStaff: addSuccess =>{
-            dispatch(addNewStaff(addSuccess));            
-        },
+    return {        
         updateStaff: updateSuccess => {
             dispatch(updateStaff(updateSuccess));
         }
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Staff);
+export default connect(mapStateToProps,mapDispatchToProps)(StaffEdit);

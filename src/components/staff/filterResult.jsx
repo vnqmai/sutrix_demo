@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getStaffInfo } from '../../actions/staff';
-import { FilterResultDetails } from './filterResultDetails';
+import FilterResultDetails from './filterResultDetails';
 
 class FilterResultComponent extends React.Component{
     render(){
@@ -35,12 +34,4 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return{
-        getStaffInfo: (data) => {
-            dispatch(getStaffInfo(data));
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterResultComponent);
+export default connect(mapStateToProps)(FilterResultComponent);
