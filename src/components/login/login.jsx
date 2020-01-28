@@ -2,15 +2,18 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { login, logout } from '../../actions/auth';
+import { Redirect } from 'react-router-dom';
 
 class LoginComponent extends React.Component{
     constructor(){
         super();
         this.state = {
             user: {
-                username: '',
-                password: ''
-            }
+                username: null,
+                password: null
+            },
+            isSuccess: false,
+            errorMessage: null
         }
         this.handleInputsChange = this.handleInputsChange.bind(this);
     }
@@ -23,24 +26,22 @@ class LoginComponent extends React.Component{
         })
     }
 
-    checkLoginInfo = (user) => {
-        console.log("user",user);
+    checkLoginInfo = (user) => {        
         axios.post('http://localhost:3001/login',user).then(res=>{
             if(res.data.data){
                 if(res.data.data.token){                    
-                    this.props.login(res.data.data.userId, res.data.data.username,res.data.data.token, res.data.data.expires);
-                    this.setState({
-                        user: {
-                            username: '',
-                            password: ''
-                        }
-                    })
-                }                    
+                    this.props.login(res.data.data.userId, res.data.data.username,res.data.data.token, res.data.data.expires);                                        
+                    this.props.history.push('/staff/filter');
+                }                                 
             }            
+            this.setState({
+                isSuccess: res.data.isSuccess,
+                errorMessage: res.data.errorMessage
+            })               
         })
     }
 
-    render(){
+    render(){        
         return(
             <div className="container content">
                 <div className="login">            
@@ -61,7 +62,7 @@ class LoginComponent extends React.Component{
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    {this.props.token?'Success':''}
+                                    {!this.isSuccess && this.state.errorMessage}
                                 </td>
                             </tr>
                         </table>
