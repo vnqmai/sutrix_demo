@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { addNewStaff, updateStaff } from '../../actions/staff';
+import { applyFilter } from '../../actions/filter';
 import { configEnv } from '../../config/env';
 
 class StaffAdd extends React.Component{
@@ -82,23 +82,14 @@ class StaffAdd extends React.Component{
             }
         };
 
-        axios.post(`${configEnv[configEnv.env].host}/staff`, fd, config).then(res=>{
-            this.props.addNewStaff(true);
-            this.setState({
-                newStaff: {
-                    firstName: '',
-                    lastName: '',
-                    birthDate: '',
-                    gender: '',
-                    address: '',
-                    id: null,
-                    mobile: '',
-                    skype: '',
-                    email: '',
-                    joinDate: '',
-                    department: ''
-                }
-            });
+        axios.post(`${configEnv[configEnv.env].host}/staff`, fd, config).then(res=>{            
+            
+            const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
+            axios.post(`${configEnv[configEnv.env].host}/staff/filter`,{fullname: "", department: ""}, config).then(res=>{
+                this.props.applyFilter(res.data);
+            })
+
+            this.props.history.push('/staff/result');
         });
     }
 
@@ -189,10 +180,7 @@ class StaffAdd extends React.Component{
                                 <td colspan="2" class="right">
                                     <input type="button" value={'Add'} class="btn-orange" onClick={this.addNewStaff}/>                                    
                                 </td>
-                            </tr>       
-                            <tr>
-                                    <td>{this.props.addSuccess?"Add Success":""}</td>                                    
-                            </tr>                     
+                            </tr>                          
                         </table>                    
                 </div>
                 <div class="col-lg-4 col-md-4 col-lg-12 staff-picture">
@@ -211,16 +199,15 @@ class StaffAdd extends React.Component{
 }
 
 const mapStateToProps = state => {
-    return{        
-        addSuccess: state.staff.addSuccess,        
+    return{                       
         token: state.auth.token,        
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-        addNewStaff: addSuccess =>{
-            dispatch(addNewStaff(addSuccess));            
+    return {        
+        applyFilter: data => {
+            dispatch(applyFilter(data));
         }
     }
 }

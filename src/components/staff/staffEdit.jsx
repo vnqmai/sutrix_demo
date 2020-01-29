@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { updateStaff } from '../../actions/staff';
+import { getStaffInfo } from '../../actions/staff';
 import { configEnv } from '../../config/env';
 
 class StaffEdit extends React.Component{
@@ -89,7 +89,8 @@ class StaffEdit extends React.Component{
         };
 
         axios.put(`${configEnv[configEnv.env].host}/staff`, fd, config).then(res=>{
-            this.props.updateStaff(true);            
+            this.props.getStaffInfo(res.data);
+            this.props.history.push('/staff/info', this.props.staffInfo);           
         })
     }
 
@@ -191,10 +192,7 @@ class StaffEdit extends React.Component{
                                 <td colspan="2" class="right">
                                     <input type="button" value={'Edit'} class="btn-orange" onClick={this.updateStaff}/>
                                 </td>
-                            </tr>       
-                            <tr>                                    
-                                    <td>{this.props.updateSuccess?"Update Success":""}</td>
-                            </tr>                     
+                            </tr>                          
                         </table>                    
                 </div>
                 <div class="col-lg-4 col-md-4 col-lg-12 staff-picture">
@@ -214,18 +212,17 @@ class StaffEdit extends React.Component{
 
 const mapStateToProps = state => {
     return{
-        staffInfo: state.staff.staffInfo,
-        updateSuccess: state.staff.updateSuccess,
+        staffInfo: state.staff.staffInfo,        
         token: state.auth.token,        
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return {        
-        updateStaff: updateSuccess => {
-            dispatch(updateStaff(updateSuccess));
+    return {
+        getStaffInfo: staffInfo => {
+            dispatch(getStaffInfo(staffInfo));
         }
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(StaffEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(StaffEdit);
