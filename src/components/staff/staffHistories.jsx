@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { configEnv } from '../../config/env';
 
 class StaffHistories extends React.Component{
     constructor(){
@@ -18,7 +19,7 @@ class StaffHistories extends React.Component{
 
     getHistories = () => {
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.get('https://sutrix-be.herokuapp.com/staffHistory/'+this.props.staffId, config).then(res => {
+        axios.get(`${configEnv[configEnv.env].host}/staffHistory/`+this.props.staffId, config).then(res => {
             this.setState({
                 histories: res.data
             })
@@ -29,7 +30,7 @@ class StaffHistories extends React.Component{
 
     removeHistory = (historyId) => {
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.delete('https://sutrix-be.herokuapp.com/staffHistory/'+historyId, config).then(res=>{
+        axios.delete(`${configEnv[configEnv.env].host}/staffHistory/`+historyId, config).then(res=>{
             this.setState({
                 histories: res.data
             })
@@ -38,7 +39,7 @@ class StaffHistories extends React.Component{
 
     addHistory = (history) => {
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.post('https://sutrix-be.herokuapp.com/staffHistory', history, config).then(res=>{
+        axios.post(`${configEnv[configEnv.env].host}/staffHistory`, history, config).then(res=>{
             this.setState({
                 histories: res.data
             })

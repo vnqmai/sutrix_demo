@@ -1,5 +1,6 @@
 import React from 'react';
 import StaffHistories from './staffHistories';
+import { configEnv } from '../../config/env';
 
 export default class StaffInfoComponent extends React.Component{    
     constructor(){
@@ -63,7 +64,7 @@ export default class StaffInfoComponent extends React.Component{
                     </div>
                     <div className="col-lg-6 col-md-6 col-lg-12 staff-picture">
                         <div className="staff-image">
-                            <img src={staff.image?staff.image:"https://sutrix-be.herokuapp.com/assets/images/staff.png"} alt="" className="img"/>
+                            <img src={staff.image?staff.image:`${configEnv[configEnv.env].host}/assets/images/staff.png`} alt="" className="img"/>
                         </div>
                     </div>
                 </div>

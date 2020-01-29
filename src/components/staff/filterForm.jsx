@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {applyFilter} from '../../actions/filter';
 import axios from 'axios';
+import { configEnv } from '../../config/env';
 
 class FilterFormComponent extends React.Component{
     constructor(){
@@ -17,7 +18,7 @@ class FilterFormComponent extends React.Component{
 
     componentDidMount(){
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.get('https://sutrix-be.herokuapp.com/department', config).then(res=>{
+        axios.get(`${configEnv[configEnv.env].host}/department`, config).then(res=>{
             this.setState({
                 departments: res.data
             })
@@ -33,7 +34,7 @@ class FilterFormComponent extends React.Component{
             headers: { Authorization: `Bearer ${this.props.token}` }
         };
 
-        axios.post('https://sutrix-be.herokuapp.com/staff/filter', { fullname: this.state.fullname, department: this.state.department }, config)
+        axios.post(`${configEnv[configEnv.env].host}/staff/filter`, { fullname: this.state.fullname, department: this.state.department }, config)
             .then(res => {
                 this.props.applyFilter(res.data);
                 this.props.history.push('/staff/result');
@@ -53,7 +54,7 @@ class FilterFormComponent extends React.Component{
                                 <td>Department:</td>
                                 <td>
                                     <select name="department" id="department" onChange={evt=>{this.setState({department: evt.target.value});console.log("department:",this.state.department)}}>
-                                        <option value="default">-- Choose department --</option>
+                                        <option value="">-- Choose department --</option>
                                         {this.state.departments.map((department, index)=>{
                                             return <option value={department.departmentName} key={index}>{department.departmentName}</option>
                                         })}                                        

@@ -2,6 +2,7 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { configEnv } from '../../config/env';
 
 class Chart extends React.Component{
     constructor(){
@@ -33,9 +34,9 @@ class Chart extends React.Component{
         return res;
     }
 
-    componentDidMount(){        
+    componentDidMount(){             
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.get('https://sutrix-be.herokuapp.com/analyse',config).then(res=>{            
+        axios.get(`${configEnv[configEnv.env].host}/analyse`,config).then(res=>{            
             this.setState({
                 chartData: {
                     labels: this.getDataColumns(res.data,'_id'),

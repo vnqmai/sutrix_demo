@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { login, logout } from '../../actions/auth';
-import { Redirect } from 'react-router-dom';
+import { configEnv } from '../../config/env';
 
 class LoginComponent extends React.Component{
     constructor(){
@@ -27,11 +27,11 @@ class LoginComponent extends React.Component{
     }
 
     checkLoginInfo = (user) => {        
-        axios.post('https://sutrix-be.herokuapp.com/login',user).then(res=>{
+        axios.post(`${configEnv[configEnv.env].host}/login`,user).then(res=>{
             if(res.data.data){
                 if(res.data.data.token){                    
                     this.props.login(res.data.data.userId, res.data.data.username,res.data.data.token, res.data.data.expires);                                        
-                    this.props.history.push('/staff/filter');
+                    this.props.history.push('/dashboard');
                 }                                 
             }            
             this.setState({

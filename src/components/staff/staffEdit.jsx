@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { addNewStaff, updateStaff } from '../../actions/staff';
+import { updateStaff } from '../../actions/staff';
+import { configEnv } from '../../config/env';
 
 class StaffEdit extends React.Component{
     constructor(){
@@ -30,7 +31,7 @@ class StaffEdit extends React.Component{
 
     getDepartments = () => {
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.get('https://sutrix-be.herokuapp.com/department', config).then(res=>{
+        axios.get(`${configEnv[configEnv.env].host}/department`, config).then(res=>{
             this.setState({
                 departments: res.data
             })
@@ -87,7 +88,7 @@ class StaffEdit extends React.Component{
             }
         };
 
-        axios.put('https://sutrix-be.herokuapp.com/staff', fd, config).then(res=>{
+        axios.put(`${configEnv[configEnv.env].host}/staff`, fd, config).then(res=>{
             this.props.updateStaff(true);            
         })
     }
@@ -198,7 +199,7 @@ class StaffEdit extends React.Component{
                 </div>
                 <div class="col-lg-4 col-md-4 col-lg-12 staff-picture">
                     <div class="staff-image">
-                        <img src={this.props.staffInfo.image?this.props.staffInfo.image:'https://sutrix-be.herokuapp.com/assets/images/alt_picture.png'} alt="" class="img" id="staffPhoto"/>
+                        <img src={this.props.staffInfo.image?this.props.staffInfo.image:`${configEnv[configEnv.env].host}/assets/images/alt_picture.png`} alt="" class="img" id="staffPhoto"/>
                         <div class="description">
                             <img src='/images/picture.png' alt="" onClick={()=>this.inputFileClick()} for="image"/> Choose image format available JPG, PNG, GIF copy
                             <input type="file" name="image" id="image" style={{"display": "none"}} onChange={this.handleInputFileChange}/>
