@@ -45,15 +45,16 @@ class FilterFormComponent extends React.Component{
         return(            
                 <div className="filter">
                     
-                        <table className="form-table">
+                    <table className="form-table">
+                        <tbody>
                             <tr>
                                 <td>Full Name:</td>
-                                <td><input type="text" name="fullname" onChange={evt=>{this.setState({fullname: evt.target.value}); console.log("fullname:",this.state.fullname)}}/></td>
+                                <td><input type="text" name="fullname" onChange={evt=>{this.setState({fullname: evt.target.value})}}/></td>
                             </tr>
                             <tr>
                                 <td>Department:</td>
                                 <td>
-                                    <select name="department" id="department" onChange={evt=>{this.setState({department: evt.target.value});console.log("department:",this.state.department)}}>
+                                    <select name="department" id="department" onChange={evt=>{this.setState({department: evt.target.value})}}>
                                         <option value="">-- Choose department --</option>
                                         {this.state.departments.map((department, index)=>{
                                             return <option value={department.departmentName} key={index}>{department.departmentName}</option>
@@ -62,12 +63,13 @@ class FilterFormComponent extends React.Component{
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">
+                                <td colSpan="2">
                                     <Link className="btn-orange" to="/staff/result" onClick={this.doApplyFilter}> Apply</Link>
                                     {/* onClick={this.applyFilter(this.state.fullname,this.state.department)} */}
                                 </td>
-                            </tr>
-                        </table>                    
+                            </tr>                        
+                        </tbody>
+                    </table>                    
                 </div>            
         );
     }

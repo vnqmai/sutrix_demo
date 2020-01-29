@@ -164,11 +164,11 @@ body {
     margin: 0 auto;
 }
 
-.form-table>tr>td {
+.form-table>tbody>tr>td {
     padding: 5px 5px;
 }
 
-.form-table>tr>td[colspan='2'] {
+.form-table>tbody>tr>td[colspan='2'] {
     text-align: center;
 }
 
@@ -178,11 +178,11 @@ body {
     padding: 3px 10px;
 }
 
-.form-table>tr>td.right {
+.form-table>tbody>tr>td.right {
     text-align: right;
 }
 
-.form-table>tr>td.center {
+.form-table>tbody>tr>td.center {
     text-align: center;
 }
 
@@ -232,7 +232,7 @@ body {
 
 /* info table */
 
-.info-table>tr>td {
+.info-table>tbody>tr>td {
     padding: 5px 30px;
 }
 

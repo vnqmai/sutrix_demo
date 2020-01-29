@@ -9,8 +9,8 @@ class LoginComponent extends React.Component{
         super();
         this.state = {
             user: {
-                username: null,
-                password: null
+                username: '',
+                password: ''
             },
             isSuccess: false,
             errorMessage: null
@@ -47,24 +47,27 @@ class LoginComponent extends React.Component{
                 <div className="login">            
                     <form>
                         <table className="form-table">
-                            <tr>
-                                <td>Username:</td>
-                                <td><input type="text" name="username" onChange={this.handleInputsChange} value={this.state.user.username}/></td>
-                            </tr>
-                            <tr>
-                                <td>Password:</td>
-                                <td><input type="password" name="password" onChange={this.handleInputsChange} value={this.state.user.password}/></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="button" className="btn-orange" value="Login" onClick={()=>this.checkLoginInfo(this.state.user)}/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    {!this.isSuccess && this.state.errorMessage}
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>Username:</td>
+                                    <td><input type="text" name="username" onChange={this.handleInputsChange} value={this.state.user.username}/></td>
+                                </tr>
+                                <tr>
+                                    <td>Password:</td>
+                                    <td><input type="password" name="password" onChange={this.handleInputsChange} value={this.state.user.password}/></td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="2">
+                                        <input type="button" className="btn-orange" value="Login" onClick={()=>this.checkLoginInfo(this.state.user)}/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colSpan="2">
+                                        {!this.isSuccess && this.state.errorMessage}
+                                    </td>
+                                </tr>
+                            
+                            </tbody>
                         </table>
                     </form>            
                 </div>

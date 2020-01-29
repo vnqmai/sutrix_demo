@@ -16,50 +16,52 @@ export default class StaffInfoComponent extends React.Component{
                 <div className="row profile">
                     <div className="col-lg-6 col-md-6 col-lg-12">
                         <table className="info-table">
-                            <tr>
-                                <td>First Name:</td>
-                                <td>{staff.firstName}</td>
-                            </tr>
-                            <tr>
-                                <td>Last Name:</td>
-                                <td>{staff.lastName}</td>
-                            </tr>
-                            <tr>
-                                <td>Date of birth:</td>
-                                <td>{staff.birthDate}</td>
-                            </tr>
-                            <tr>
-                                <td>Gender:</td>
-                                <td>{staff.gender}</td>
-                            </tr>
-                            <tr>
-                                <td>Address:</td>
-                                <td>{staff.address}</td>
-                            </tr>
-                            <tr>
-                                <td>ID:</td>
-                                <td>{staff._id}</td>
-                            </tr>
-                            <tr>
-                                <td>Mobile:</td>
-                                <td>{staff.mobile}</td>
-                            </tr>
-                            <tr>
-                                <td>Skype:</td>
-                                <td>{staff.skype}</td>
-                            </tr>
-                            <tr>
-                                <td>Email:</td>
-                                <td>{staff.email}</td>
-                            </tr>
-                            <tr>
-                                <td>Join Date:</td>
-                                <td>{staff.joinDate}</td>
-                            </tr>
-                            <tr>
-                                <td>Department:</td>
-                                <td>{staff.department}</td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>First Name:</td>
+                                    <td>{staff.firstName}</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name:</td>
+                                    <td>{staff.lastName}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date of birth:</td>
+                                    <td>{staff.birthDate}</td>
+                                </tr>
+                                <tr>
+                                    <td>Gender:</td>
+                                    <td>{staff.gender}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address:</td>
+                                    <td>{staff.address}</td>
+                                </tr>
+                                <tr>
+                                    <td>ID:</td>
+                                    <td>{staff._id}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mobile:</td>
+                                    <td>{staff.mobile}</td>
+                                </tr>
+                                <tr>
+                                    <td>Skype:</td>
+                                    <td>{staff.skype}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td>{staff.email}</td>
+                                </tr>
+                                <tr>
+                                    <td>Join Date:</td>
+                                    <td>{staff.joinDate}</td>
+                                </tr>
+                                <tr>
+                                    <td>Department:</td>
+                                    <td>{staff.department}</td>
+                                </tr>                            
+                            </tbody>
                         </table>
                     </div>
                     <div className="col-lg-6 col-md-6 col-lg-12 staff-picture">
