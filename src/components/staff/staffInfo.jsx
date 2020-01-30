@@ -1,15 +1,16 @@
 import React from 'react';
 import StaffHistories from './staffHistories';
+import { connect } from 'react-redux';
 import { configEnv } from '../../config/env';
 
-export default class StaffInfoComponent extends React.Component{    
+class StaffInfoComponent extends React.Component{    
     constructor(){
         super();
 
     }
 
     render(){
-        const staff = this.props.location.state;
+        const staff = this.props.staffInfo;
                 
         return(
             <div className="container content">
@@ -77,3 +78,12 @@ export default class StaffInfoComponent extends React.Component{
         );
     }
 }
+
+
+const mapStateToProps = state => {
+    return{        
+        staffInfo: state.staff.staffInfo
+    }
+}
+
+export default connect(mapStateToProps)(StaffInfoComponent);

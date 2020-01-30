@@ -1,8 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FilterResultDetails from './filterResultDetails';
+import { getStaffInfo } from '../../actions/staff';
 
 class FilterResultComponent extends React.Component{
+
+    constructor(){
+        super();
+        this.moveToStaffInfo = this.moveToStaffInfo.bind(this);
+    }
+    
+    moveToStaffInfo = (staffInfo) => {
+        this.props.getStaffInfo(staffInfo);
+        this.props.history.push('/staff/info');            
+    }
+
     render(){
         return(            
                 <table className="table table-hover table-result">
@@ -17,8 +29,14 @@ class FilterResultComponent extends React.Component{
                     </thead>
                     <tbody>
                         {this.props.staff.map((st, index)=>{
-                            return(                                                                                                                         
-                                <FilterResultDetails key={index} staff={st} history={this.props.history} location={this.props.location}></FilterResultDetails>
+                            return(                                                                                                                                                         
+                                <tr  key={index} onClick={(staff)=>this.moveToStaffInfo(st)}>
+                                    <td>{st.lastName + ' ' + st.firstName}</td>
+                                    <td>{st.birthday}</td>
+                                    <td>{st.skype}</td>
+                                    <td>{st.email}</td>
+                                    <td>{st.department}</td>
+                                </tr>
                             );                            
                         })}                                                
                     </tbody>
@@ -30,8 +48,17 @@ class FilterResultComponent extends React.Component{
 
 const mapStateToProps = state => {
     return{
-        staff: state.filter.staff
+        staff: state.filter.staff,
+        staffInfo: state.staff.staffInfo
     }
 }
 
-export default connect(mapStateToProps)(FilterResultComponent);
+const mapDispatchToProps = dispatch => {
+    return{
+        getStaffInfo: (data) => {
+            dispatch(getStaffInfo(data));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterResultComponent);

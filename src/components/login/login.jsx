@@ -50,11 +50,17 @@ class LoginComponent extends React.Component{
                             <tbody>
                                 <tr>
                                     <td>Username:</td>
-                                    <td><input type="text" name="username" onChange={this.handleInputsChange} value={this.state.user.username}/></td>
+                                    <td>
+                                        <input type="text" name="username" onChange={this.handleInputsChange} value={this.state.user.username}/>
+                                        <div className="validation"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Password:</td>
-                                    <td><input type="password" name="password" onChange={this.handleInputsChange} value={this.state.user.password}/></td>
+                                    <td>
+                                        <input type="password" name="password" onChange={this.handleInputsChange} value={this.state.user.password}/>
+                                        <div className="validation"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td colSpan="2">

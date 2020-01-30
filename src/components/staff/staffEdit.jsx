@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getStaffInfo } from '../../actions/staff';
+import { applyFilter } from '../../actions/filter';
 import { configEnv } from '../../config/env';
 
 class StaffEdit extends React.Component{
@@ -89,8 +90,22 @@ class StaffEdit extends React.Component{
         };
 
         axios.put(`${configEnv[configEnv.env].host}/staff`, fd, config).then(res=>{
-            this.props.getStaffInfo(res.data);
-            this.props.history.push('/staff/info', this.props.staffInfo);           
+            // update state.staff.staffInfo
+            this.props.getStaffInfo(res.data);       
+
+        }).then(res=>{
+
+            // update state.filter.staff
+            const staffFilter = this.props.staffFilterResult;
+            for(var i = 0;i<staffFilter.length; ++i){                
+                if(staffFilter[i]._id===this.state.newStaff._id){
+                    staffFilter[i] = this.state.newStaff;
+                }
+            }            
+            this.props.applyFilter(staffFilter);
+            
+        }).then(res=>{
+            this.props.history.goBack();   
         })
     }
 
@@ -214,6 +229,7 @@ class StaffEdit extends React.Component{
 
 const mapStateToProps = state => {
     return{
+        staffFilterResult: state.filter.staff,
         staffInfo: state.staff.staffInfo,        
         token: state.auth.token,        
     }
@@ -223,6 +239,9 @@ const mapDispatchToProps = dispatch => {
     return {
         getStaffInfo: staffInfo => {
             dispatch(getStaffInfo(staffInfo));
+        },
+        applyFilter: data => {
+            dispatch(applyFilter(data));
         }
     }
 }

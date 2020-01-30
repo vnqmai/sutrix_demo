@@ -39,7 +39,8 @@ class StaffAdd extends React.Component{
     }
 
     componentDidMount(){        
-        this.getDepartments();        
+        this.getDepartments();    
+        console.log('history', this.props.history);    
     }
 
     handleInputChange(e) {

@@ -288,3 +288,14 @@ textarea {
 .clickable {
     cursor: pointer;
 }
+
+
+/* validation */
+
+.validation {
+    display: none;
+    margin: 0 0 10px;
+    font-weight: 400;
+    font-size: 13px;
+    color: #DE5959;
+}
