@@ -168,6 +168,10 @@ body {
     padding: 5px 5px;
 }
 
+.form-table>tbody>tr>td:nth-child(1) {
+    vertical-align: top;
+}
+
 .form-table>tbody>tr>td[colspan='2'] {
     text-align: center;
 }
@@ -293,7 +297,6 @@ textarea {
 /* validation */
 
 .validation {
-    display: none;
     margin: 0 0 10px;
     font-weight: 400;
     font-size: 13px;

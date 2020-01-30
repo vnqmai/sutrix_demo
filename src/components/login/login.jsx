@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import validator from 'validator';
 import { login, logout } from '../../actions/auth';
 import { configEnv } from '../../config/env';
 
@@ -12,33 +13,58 @@ class LoginComponent extends React.Component{
                 username: '',
                 password: ''
             },
+            error: {},
             isSuccess: false,
             errorMessage: null
         }
-        this.handleInputsChange = this.handleInputsChange.bind(this);
+        this.handleInputsChange = this.handleInputsChange.bind(this);        
     }
 
-    handleInputsChange = e =>{
+    handleInputsChange = e =>{                
         let formData = Object.assign({}, this.state.user);
-        formData[e.target.name] = e.target.value;
+        formData[e.target.name] = e.target.value;        
+
         this.setState({
             user: formData            
+        })        
+    }
+
+    validateFormData = () => {
+        let isValid = true;
+
+        const error = {}
+        if(validator.isEmpty(this.state.user.username)){            
+            error['username'] = 'The username field is required.';
+            isValid = false;
+        }
+
+        if(validator.isEmpty(this.state.user.password)){
+            error['password'] = 'The password field is required.';
+            isValid = false;
+        }
+
+        this.setState({
+            error: error
         })
+
+        return isValid;
     }
 
     checkLoginInfo = (user) => {        
-        axios.post(`${configEnv[configEnv.env].host}/login`,user).then(res=>{
-            if(res.data.data){
-                if(res.data.data.token){                    
-                    this.props.login(res.data.data.userId, res.data.data.username,res.data.data.token, res.data.data.expires);                                        
-                    this.props.history.push('/dashboard');
-                }                                 
-            }            
-            this.setState({
-                isSuccess: res.data.isSuccess,
-                errorMessage: res.data.errorMessage
-            })               
-        })
+        if(this.validateFormData()){
+            axios.post(`${configEnv[configEnv.env].host}/login`,user).then(res=>{
+                if(res.data.data){
+                    if(res.data.data.token){                    
+                        this.props.login(res.data.data.userId, res.data.data.username,res.data.data.token, res.data.data.expires);                                        
+                        this.props.history.push('/dashboard');
+                    }                                 
+                }            
+                this.setState({
+                    isSuccess: res.data.isSuccess,
+                    errorMessage: res.data.errorMessage
+                })               
+            })
+        }
     }
 
     render(){        
@@ -52,14 +78,14 @@ class LoginComponent extends React.Component{
                                     <td>Username:</td>
                                     <td>
                                         <input type="text" name="username" onChange={this.handleInputsChange} value={this.state.user.username}/>
-                                        <div className="validation"></div>
+                                        {this.state.error.username && <div className="validation">{this.state.error.username}</div>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Password:</td>
                                     <td>
                                         <input type="password" name="password" onChange={this.handleInputsChange} value={this.state.user.password}/>
-                                        <div className="validation"></div>
+                                        {this.state.error.password && <div className="validation">{this.state.error.password}</div>}
                                     </td>
                                 </tr>
                                 <tr>
