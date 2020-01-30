@@ -1,12 +1,16 @@
 import React from 'react';
 import StaffHistories from './staffHistories';
 import { connect } from 'react-redux';
+import { addBackToFilterResult } from '../../actions/back';
 import { configEnv } from '../../config/env';
 
 class StaffInfoComponent extends React.Component{    
     constructor(){
         super();
+    }
 
+    componentDidMount(){
+        this.props.addBackToFilterResult();
     }
 
     render(){
@@ -86,4 +90,12 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(StaffInfoComponent);
+const mapDispatchToProps = dispatch => {
+    return {        
+        addBackToFilterResult: () => {
+            dispatch(addBackToFilterResult());
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StaffInfoComponent);

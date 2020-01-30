@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { applyFilter } from '../../actions/filter';
+import { resetStepAddBackToFilterResult } from '../../actions/back';
 import { configEnv } from '../../config/env';
 
 class StaffAdd extends React.Component{
@@ -90,7 +91,15 @@ class StaffAdd extends React.Component{
                 this.props.applyFilter(res.data);
             })
 
-            this.props.history.push('/staff/result');
+            console.log('nstep',this.props.nStep);
+
+            let nStep = this.props.nStep;
+            if(nStep!==0){             
+                resetStepAddBackToFilterResult(); 
+                this.props.history.go(-nStep);
+            }
+            else
+                this.props.history.replace('/staff/result');
         });
     }
 
@@ -203,7 +212,8 @@ class StaffAdd extends React.Component{
 
 const mapStateToProps = state => {
     return{                       
-        token: state.auth.token,        
+        token: state.auth.token,     
+        nStep: state.back.nStep_AddToFilterResult   
     }
 }
 
@@ -211,6 +221,9 @@ const mapDispatchToProps = dispatch => {
     return {        
         applyFilter: data => {
             dispatch(applyFilter(data));
+        },
+        resetStepAddBackToFilterResult: () => {
+            dispatch(resetStepAddBackToFilterResult());
         }
     }
 }

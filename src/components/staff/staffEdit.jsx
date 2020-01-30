@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { getStaffInfo } from '../../actions/staff';
 import { applyFilter } from '../../actions/filter';
+import { addBackToFilterResult } from '../../actions/back';
 import { configEnv } from '../../config/env';
 
 class StaffEdit extends React.Component{
@@ -104,6 +105,8 @@ class StaffEdit extends React.Component{
             }            
             this.props.applyFilter(staffFilter);
             
+        }).then(res=>{
+            this.props.addBackToFilterResult();
         }).then(res=>{
             this.props.history.goBack();   
         })
@@ -242,6 +245,9 @@ const mapDispatchToProps = dispatch => {
         },
         applyFilter: data => {
             dispatch(applyFilter(data));
+        },
+        addBackToFilterResult: () => {
+            dispatch(addBackToFilterResult());
         }
     }
 }

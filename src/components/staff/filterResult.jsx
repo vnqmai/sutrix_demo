@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FilterResultDetails from './filterResultDetails';
 import { getStaffInfo } from '../../actions/staff';
+import { addBackToFilterResult } from '../../actions/back';
 
 class FilterResultComponent extends React.Component{
 
@@ -12,6 +13,7 @@ class FilterResultComponent extends React.Component{
     
     moveToStaffInfo = (staffInfo) => {
         this.props.getStaffInfo(staffInfo);
+        this.props.addBackToFilterResult();
         this.props.history.push('/staff/info');            
     }
 
@@ -57,6 +59,9 @@ const mapDispatchToProps = dispatch => {
     return{
         getStaffInfo: (data) => {
             dispatch(getStaffInfo(data));
+        },
+        addBackToFilterResult: () => {
+            dispatch(addBackToFilterResult());
         }
     }
 }
