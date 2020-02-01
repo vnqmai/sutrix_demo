@@ -2,6 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import validator from 'validator';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
+
 import { applyFilter } from '../../actions/filter';
 import { resetStepAddBackToFilterResult } from '../../actions/back';
 import { configEnv } from '../../config/env';
@@ -16,7 +21,7 @@ class StaffAdd extends React.Component{
                     firstName: '',
                     lastName: '',
                     birthDate: '',
-                    gender: '',
+                    gender: 'true',
                     address: '',
                     id: '',
                     mobile: '',
@@ -29,6 +34,7 @@ class StaffAdd extends React.Component{
             error: {}
         }
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputDateChange = this.handleInputDateChange.bind(this);        
         this.handleInputFileChange = this.handleInputFileChange.bind(this);
     }
 
@@ -42,14 +48,25 @@ class StaffAdd extends React.Component{
     }
 
     componentDidMount(){        
-        this.getDepartments();    
-        console.log('history', this.props.history);    
+        this.getDepartments();            
     }
 
     handleInputChange(e) {
-        let formData = Object.assign({}, this.state.newStaff);
+        let formData = Object.assign({}, this.state.newStaff);        
         formData[e.target.name] = e.target.value;        
         this.setState({newStaff: formData});        
+    }
+
+    handleInputDateChange(name, date){        
+        let formData = Object.assign({}, this.state.newStaff);        
+        
+        try{            
+            formData[name] = date;
+            this.setState({newStaff: formData});                    
+        }
+        catch(e){
+            this.state.error[name] = "This is not a valid date.";
+        }
     }
 
     handleInputFileChange(e){
@@ -82,16 +99,7 @@ class StaffAdd extends React.Component{
             error['lastName'] = 'The last name field is required.';
             isValid = false;
         }
-
-        if(validator.isEmpty(this.state.newStaff.birthDate)){
-            error['birthDate'] = 'The date of birth field is required.';
-            isValid = false;
-        }
-
-        if(validator.toDate(this.state.newStaff.birthDate)===null){
-            error['birthDate'] = 'The date of birth field is not a valid date.';
-            isValid = false;
-        }
+        
 
         if(validator.isEmpty(this.state.newStaff.address)){
             error['address'] = 'The address field is required.';
@@ -122,16 +130,7 @@ class StaffAdd extends React.Component{
         //     error['email'] = 'The email field is not a valid email.';
         //     isValid = false;
         // }
-
-        if(validator.isEmpty(this.state.newStaff.joinDate)){
-            error['joinDate'] = 'The join date field is required.';
-            isValid = false;
-        }
-
-        if(validator.toDate(this.state.newStaff.joinDate)===null){
-            error['joinDate'] = 'The join date field is not a valid date.';
-            isValid = false;
-        }
+        
 
         this.setState({
             error: error
@@ -149,7 +148,8 @@ class StaffAdd extends React.Component{
                     break;
                 fd.append(key, newStaff[key]);
             }
-            fd.append('image', this.state.newStaff.image, this.state.newStaff.image.name);
+            if(this.state.newStaff.image==='')
+                fd.append('image', this.state.newStaff.image, this.state.newStaff.image.name);
                     
             const config = {
                 headers: {
@@ -164,8 +164,7 @@ class StaffAdd extends React.Component{
                 axios.post(`${configEnv[configEnv.env].host}/staff/filter`,{fullname: "", department: ""}, config).then(res=>{
                     this.props.applyFilter(res.data);
                 })
-    
-                console.log('nstep',this.props.nStep);
+                    
     
                 let nStep = this.props.nStep;
                 if(nStep!==0){             
@@ -205,17 +204,21 @@ class StaffAdd extends React.Component{
                                 <tr>
                                     <td>Date of birth:</td>
                                     <td>
-                                        <input type="text" name="birthDate" onChange={this.handleInputChange}/>
-                                        {this.state.error.birthDate && <div className="validation">{this.state.error.birthDate}</div>}
+                                        <DatePicker name="birthDate" dateFormat="dd-MM-yyyy" 
+                                            selected={(this.state.newStaff&&moment(this.state.newStaff.birthDate))
+                                                        ?this.state.newStaff.birthDate:new Date()} 
+                                            showYearDropdown
+                                            onChange={this.handleInputDateChange.bind(this, 'birthDate')}
+                                            />                                        
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Gender:</td>
                                     <td>
                                         <input type="radio" name="gender" value={true} onChange={this.handleInputChange} 
-                                        checked/> Male
+                                        checked={this.state.newStaff.gender==="true"}/> Male
                                         <input type="radio" name="gender" value={false} onChange={this.handleInputChange}
-                                        /> Female
+                                        checked={this.state.newStaff.gender==="false"}/> Female
                                     </td>
                                 </tr>
                                 <tr>
@@ -256,8 +259,12 @@ class StaffAdd extends React.Component{
                                 <tr>
                                     <td>Join Date:</td>
                                     <td>
-                                        <input type="text" name="joinDate" onChange={this.handleInputChange}/>
-                                        {this.state.error.joinDate && <div className="validation">{this.state.error.joinDate}</div>}
+                                        <DatePicker name="joinDate" dateFormat="dd-MM-yyyy" 
+                                            selected={(this.state.newStaff&&moment(this.state.newStaff.joinDate))
+                                                        ?this.state.newStaff.joinDate:new Date()} 
+                                            showYearDropdown
+                                            onChange={this.handleInputDateChange.bind(this, 'joinDate')}
+                                            />                                        
                                     </td>
                                 </tr>
                                 <tr>

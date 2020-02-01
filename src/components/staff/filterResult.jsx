@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import FilterResultDetails from './filterResultDetails';
+import moment from 'moment';
 import { getStaffInfo } from '../../actions/staff';
 import { addBackToFilterResult } from '../../actions/back';
 
@@ -34,7 +34,7 @@ class FilterResultComponent extends React.Component{
                             return(                                                                                                                                                         
                                 <tr  key={index} onClick={(staff)=>this.moveToStaffInfo(st)}>
                                     <td>{st.lastName + ' ' + st.firstName}</td>
-                                    <td>{st.birthday}</td>
+                                    <td>{moment(st.joinDate).format('DD-MM-YYYY')}</td>
                                     <td>{st.skype}</td>
                                     <td>{st.email}</td>
                                     <td>{st.department}</td>

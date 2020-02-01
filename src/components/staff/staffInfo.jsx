@@ -1,8 +1,9 @@
 import React from 'react';
-import StaffHistories from './staffHistories';
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
 import { addBackToFilterResult } from '../../actions/back';
 import { configEnv } from '../../config/env';
+import StaffHistories from './staffHistories';
 
 class StaffInfoComponent extends React.Component{    
     constructor(){
@@ -14,8 +15,8 @@ class StaffInfoComponent extends React.Component{
     }
 
     render(){
-        const staff = this.props.staffInfo;
-                
+        const staff = this.props.staffInfo;                
+        
         return(
             <div className="container content">
                 <div className="row profile">
@@ -32,11 +33,15 @@ class StaffInfoComponent extends React.Component{
                                 </tr>
                                 <tr>
                                     <td>Date of birth:</td>
-                                    <td>{staff.birthDate}</td>
+                                    <td>
+                                        <Moment format="DD-MM-YYYY">
+                                            {staff.birthDate}
+                                        </Moment>
+                                    </td>                                    
                                 </tr>
                                 <tr>
                                     <td>Gender:</td>
-                                    <td>{staff.gender}</td>
+                                    <td>{staff.gender?'Male':'Female'}</td>
                                 </tr>
                                 <tr>
                                     <td>Address:</td>
@@ -44,7 +49,7 @@ class StaffInfoComponent extends React.Component{
                                 </tr>
                                 <tr>
                                     <td>ID:</td>
-                                    <td>{staff._id}</td>
+                                    <td>{staff.id}</td>
                                 </tr>
                                 <tr>
                                     <td>Mobile:</td>
@@ -59,8 +64,12 @@ class StaffInfoComponent extends React.Component{
                                     <td>{staff.email}</td>
                                 </tr>
                                 <tr>
-                                    <td>Join Date:</td>
-                                    <td>{staff.joinDate}</td>
+                                    <td>Join Date:</td>                                    
+                                    <td>
+                                        <Moment format="DD-MM-YYYY">
+                                            {staff.joinDate}
+                                        </Moment>                                    
+                                    </td>                                    
                                 </tr>
                                 <tr>
                                     <td>Department:</td>
@@ -71,7 +80,7 @@ class StaffInfoComponent extends React.Component{
                     </div>
                     <div className="col-lg-6 col-md-6 col-lg-12 staff-picture">
                         <div className="staff-image">
-                            <img src={staff.image?staff.image:`${configEnv[configEnv.env].host}/assets/images/staff.png`} alt="" className="img"/>
+                            <img src={staff.image?staff.image:`${configEnv[configEnv.env].host}/assets/images/alt_picture.png`} alt="" className="img"/>
                         </div>
                     </div>
                 </div>

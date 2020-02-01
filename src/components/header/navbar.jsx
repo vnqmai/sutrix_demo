@@ -37,8 +37,8 @@ class NavbarComponent extends React.Component{
                                     <hr/>
                                     <li>
                                         <ul>
-                                            <li><Link to='/dashboard' className={window.location.pathname==='/dashboard'?'active':''}>Dashboard</Link></li>
-                                            <li><Link to='/staff/filter'className={window.location.pathname==='/staff/filter'?'active':''}>Staff</Link></li>
+                                            <li><Link to='/dashboard' className={window.location.pathname.includes('dashboard')?'active':''}>Dashboard</Link></li>
+                                            <li><Link to='/staff/filter'className={window.location.pathname.includes('staff')?'active':''}>Staff</Link></li>
                                         </ul>
                                     </li>
                                 </ul>

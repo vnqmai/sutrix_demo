@@ -21,29 +21,36 @@ class BreadcrumbsComponent extends React.Component{
         return crumbResult;
     }
 
-    getData(pathname){          
-        let names = pathname.split('/');
-        
-        let crumbs = [];
-        names.map((name, index)=>{   
-            if(index!==0){
-                var crumb = this.findCrumbByName(name);                
-                if(crumb)
-                    crumbs.push({path: crumb.path, name: crumb.name});
-            }                      
-        })                        
-        
-        this.setState({
-            listCrumbs: crumbs
-        })
+    toCaptializeFirstLetter(letter){
+        let captialize = letter.replace(letter[0], letter[0].toUpperCase());
+        return captialize;        
+    }
 
-        links.map((link,id)=>{
-            if(link.path===pathname){                
-                this.setState({
-                    listActions: link.action
-                })                                      
-            }                                   
-        })
+    getData(pathname){          
+        if(pathname!=='/'){
+            let names = pathname.split('/');                       
+          
+            let crumbs = [];
+            names.map((name, index)=>{          
+                if(index!==0){
+                    var crumb = this.findCrumbByName(name);                
+                    if(crumb)
+                        crumbs.push({path: crumb.path, name: this.toCaptializeFirstLetter(crumb.name)});
+                }                      
+            })                        
+            
+            this.setState({
+                listCrumbs: crumbs
+            })
+    
+            links.map((link,id)=>{
+                if(link.path===pathname){                
+                    this.setState({
+                        listActions: link.action
+                    })                                      
+                }                                   
+            })
+        }        
     }    
 
     moveToAction(action){     
@@ -81,7 +88,7 @@ class BreadcrumbsComponent extends React.Component{
                             this.state.listActions.map((action, id)=>{
                                 return (
                                     <li key={id}>                                        
-                                        <a className="clickable" onClick={()=>this.moveToAction(action)}> {action.name}</a>
+                                        <a className="clickable" onClick={()=>this.moveToAction(action)}> {this.toCaptializeFirstLetter(action.name)}</a>
                                     </li>
                                 )
                             })

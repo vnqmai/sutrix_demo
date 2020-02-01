@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
 import { configEnv } from '../../config/env';
 
 class StaffHistories extends React.Component{
@@ -9,24 +10,19 @@ class StaffHistories extends React.Component{
         this.state = {
             histories: [],
             note: ''
-        }     
-        this.getHistories = this.getHistories.bind(this);        
+        }             
     }
 
     componentDidMount() {        
-        this.getHistories();
+        const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
+        axios.get(`${configEnv[configEnv.env].host}/staffHistory/`+this.props.staffId, config)
+            .then(res => {
+                this.setState({
+                    histories: res.data
+                })                        
+        });        
     }
 
-    getHistories = () => {
-        const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
-        axios.get(`${configEnv[configEnv.env].host}/staffHistory/`+this.props.staffId, config).then(res => {
-            this.setState({
-                histories: res.data
-            })
-        }).catch(function (error) {
-            console.log(error)
-          });
-    }
 
     removeHistory = (historyId) => {
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
@@ -41,12 +37,13 @@ class StaffHistories extends React.Component{
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
         axios.post(`${configEnv[configEnv.env].host}/staffHistory`, history, config).then(res=>{
             this.setState({
-                histories: res.data
-            })
+                histories: res.data,
+                note: ''
+            })            
         })
     }
 
-    render(){
+    render(){        
         return(
             <div className="row history">
                 <div className="col-lg-12">
@@ -59,7 +56,11 @@ class StaffHistories extends React.Component{
                             <div className="panel panel-default">
                                 <div className="panel-heading">
                                     <h3 className="panel-title">
-                                        <b>{history.historyDate}</b>
+                                        <b>
+                                            <Moment format="DD-MM-YYYY">
+                                                {history.historyDate}
+                                            </Moment>                                            
+                                        </b>
                                         <button type="button" className="close" onClick={()=>this.removeHistory(history._id)}>x</button>
                                     </h3>
                                 </div>
@@ -75,15 +76,22 @@ class StaffHistories extends React.Component{
                 <div className="row write-note">
                     <form>
                         <table className="form-table">
-                            <tr>
-                                <td><textarea name="note" id="note" rows="3" placeholder="Write a note" onChange={e=>this.setState({note: e.target.value})}></textarea></td>
-                            </tr>
-                            <tr>
-                                <td className="center">
-                                    <input type="button" value="Add" className="btn-orange"
-                                    onClick={()=>this.addHistory({historyActivity: this.state.note, staff: this.props.staffId})}/>
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <textarea name="note" id="note" rows="3" placeholder="Write a note" 
+                                        onChange={e=>this.setState({note: e.target.value})}
+                                        value={this.state.note}>
+                                        </textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="center">
+                                        <input type="button" value="Add" className="btn-orange"
+                                        onClick={()=>this.addHistory({historyActivity: this.state.note, staff: this.props.staffId})}/>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </form>
                 </div>
