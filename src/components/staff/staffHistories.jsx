@@ -13,6 +13,7 @@ class StaffHistories extends React.Component{
         }             
     }
 
+    
     componentDidMount() {        
         const config = {headers: {Authorization: `Bearer ${this.props.token}`}};
         axios.get(`${configEnv[configEnv.env].host}/staffHistory/`+this.props.staffId, config)

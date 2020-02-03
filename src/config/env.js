@@ -5,5 +5,5 @@ export const configEnv = {
     production: {
         host: 'https://sutrix-be.herokuapp.com'
     },
-    env: 'production'
+    env: 'development'
 }

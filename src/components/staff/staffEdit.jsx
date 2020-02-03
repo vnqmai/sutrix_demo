@@ -168,18 +168,16 @@ class StaffEdit extends React.Component{
             axios.put(`${configEnv[configEnv.env].host}/staff`, fd, config).then(res=>{
                 // update state.staff.staffInfo
                 this.props.getStaffInfo(res.data);       
-    
-            }).then(res=>{
-    
+
                 // update state.filter.staff
                 const staffFilter = this.props.staffFilterResult;
                 for(var i = 0;i<staffFilter.length; ++i){                
                     if(staffFilter[i]._id===this.state.newStaff._id){
-                        staffFilter[i] = this.state.newStaff;
+                        staffFilter[i] = res.data;                        
                     }
                 }            
                 this.props.applyFilter(staffFilter);
-                
+    
             }).then(res=>{
                 this.props.addBackToFilterResult();
             }).then(res=>{
